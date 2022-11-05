@@ -26,32 +26,32 @@ functions:
       GOOS: linux
       GOARCH: amd64
     run:
-      - go build -o bin/${IMG_LINUX}
+      - go build -ldflags="-X 'main.Version=${BUILD}.$((cat version))'" -o bin/${IMG_LINUX}
 
   - name: build-linux-arm
     env:
       GOOS: linux
       GOARCH: arm64
     run:
-      - go build -o bin/${IMG_LINUX_ARM}
+      - go build -ldflags="-X 'main.Version=${BUILD}.$((cat version))'" -o bin/${IMG_LINUX_ARM}
 
   - name: build-mac
     env:
       GOOS: darwin
       GOARCH: arm64
     run:
-      - go build -o bin/${IMG_MAC}
+      - go build -ldflags="-X 'main.Version=${BUILD}.$((cat version))'" -o bin/${IMG_MAC}
 
   - name: build-mac-amd
     env:
       GOOS: darwin
       GOARCH: amd64
     run:
-      - go build -o bin/${IMG_MAC_AMD}
+      - go build -ldflags="-X 'main.Version=${BUILD}.$((cat version))'" -o bin/${IMG_MAC_AMD}
 
   - name: build-windows
     env:
       GOOS: windows
       GOARCH: amd64
     run:
-      - go build -o bin/${IMG_WINDOWS}
+      - go build -ldflags="-X 'main.Version=${BUILD}.$((cat version))'" -o bin/${IMG_WINDOWS}

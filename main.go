@@ -14,15 +14,14 @@ type xferConfig struct {
 	ServerEndpoint string
 }
 
-//go:embed version
-var version string
+var Version = "development"
 
 func main() {
 
 	switch len(os.Args) {
 	case 1:
 		// help
-		fmt.Printf("xfer version %s\nSyntax help:\n\nSimply pass in the filename you wish to upload!", version)
+		fmt.Printf("xfer (version %s) - help:\n\nSimply pass in the filename you wish to upload!\n", Version)
 	case 2:
 		// upload file
 		link, token, err := upload(os.Args[0])
