@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "embed"
 	"errors"
 	"fmt"
 	"log"
@@ -13,14 +14,15 @@ type xferConfig struct {
 	ServerEndpoint string
 }
 
-var Version = "0.0"
+//go:embed version
+var version string
 
 func main() {
 
 	switch len(os.Args) {
 	case 1:
 		// help
-		fmt.Printf("Syntax help:\n\nSimply pass in the filename you wish to upload!")
+		fmt.Printf("xfer version %s\nSyntax help:\n\nSimply pass in the filename you wish to upload!", version)
 	case 2:
 		// upload file
 		link, token, err := upload(os.Args[0])
