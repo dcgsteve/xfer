@@ -11,7 +11,7 @@ env:
 functions:
 
   - name: release
-    description: build all releases for production
+    description: build all binaries and release next version to GitHub
     run:
       - bash -c ./next-version.sh
       - $(build-linux-arm)
@@ -20,6 +20,15 @@ functions:
       - $(build-mac-amd)
       - $(build-windows)
       - gh release create --generate-notes -t "${BUILD}.$(( cat version ))" ${BUILD}.$(( cat version )) 'bin/${IMG_LINUX}' 'bin/${IMG_LINUX_ARM}' 'bin/${IMG_MAC}' 'bin/${IMG_MAC_AMD}' 'bin/${IMG_WINDOWS}'
+
+  - name: build-all
+    description: build all binaries
+    run:
+      - $(build-linux-arm)
+      - $(build-linux)
+      - $(build-mac)
+      - $(build-mac-amd)
+      - $(build-windows)
 
   - name: build-linux
     env:

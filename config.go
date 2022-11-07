@@ -5,12 +5,29 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"runtime"
 	"strings"
 )
 
+func configDelete() error {
+	f := getConfigFullName()
+	if fileExists(f) {
+		err := os.Remove(f)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
 func getConfigDir() string {
-	// set path and file names
-	return fmt.Sprintf("%s/.config/", os.Getenv("HOME"))
+	h, err := os.UserHomeDir()
+	if err != nil {
+		log.Fatal("Unable to work out where your home directory is!")
+	}
+
+	return fmt.Sprintf("%s/.config/", h)
 }
 
 func getConfigFile() string {
@@ -55,10 +72,17 @@ func loadConfig() (*xferConfig, error) {
 			log.Fatalf("Sorry, i couldn't understand what you typed: %s", err)
 		}
 
-		// remove trailing delimeters (in order)
-		input = strings.TrimSuffix(input, "\n")
-		input = strings.TrimSuffix(input, "/")
-		input = strings.TrimSuffix(input, "\\")
+		// remove trailing delimeters
+		if runtime.GOOS == "windows" {
+			input = strings.Replace(input, "\r\n", "", -1)
+		} else {
+			input = strings.Replace(input, "\n", "", -1)
+		}
+
+		// add suffix if required
+		if !strings.HasSuffix(input, "/") {
+			input += "/"
+		}
 
 		// create default config based on input
 		c.ServerEndpoint = input
