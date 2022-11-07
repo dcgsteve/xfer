@@ -2,12 +2,18 @@
 
 simple unofficial client for transfer.sh servers
 
-# done
+## usage 
+
+Transfer file: `xfer filename`
+
+Reset configuration: `xfer /reset`
+
+## done
 
 - basic implementation of upload to custom server
 - display delete token automatically to uploader
 
-# todo
+## todo
 
 - upload directories (compressing in to tar or zip file first)
 - add client encryption of files before uploading to server
