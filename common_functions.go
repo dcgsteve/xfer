@@ -2,10 +2,7 @@ package main
 
 import (
 	"errors"
-	"fmt"
-	"math/rand"
 	"os"
-	"time"
 )
 
 func fileExists(f string) bool {
@@ -62,11 +59,11 @@ var EncryptionKey string = "dummy"
 // 	return hex.EncodeToString(hasher.Sum(nil))
 // }
 
-func rndName() string {
-	rand.Seed(time.Now().UnixNano())
-	b := make([]byte, 10)
-	// Read b number of numbers
-	rand.Read(b)
-	//return fmt.Sprintf("%x", b)[:16]
-	return fmt.Sprintf("%x", b)
-}
+// func rndName() string {
+// 	rand.Seed(time.Now().UnixNano())
+// 	b := make([]byte, 10)
+// 	// Read b number of numbers
+// 	rand.Read(b)
+// 	//return fmt.Sprintf("%x", b)[:16]
+// 	return fmt.Sprintf("%x", b)
+// }
