@@ -75,13 +75,6 @@ func upload(fpath string) (string, string, error) {
 	// set endpoint
 	ep := c.ServerEndpoint + f
 
-	fmt.Printf("Attempting to upload to %s\n ", ep)
-
-	// wd, err := os.Getwd()
-	// if err != nil {
-	// 	log.Fatal("Unable to work out what your current working directory is")
-	// }
-
 	data, err := os.Open(path.Dir(fpath) + PS + f)
 	if err != nil {
 		log.Fatal(err)
@@ -101,8 +94,12 @@ func upload(fpath string) (string, string, error) {
 	}
 	defer res.Body.Close()
 
-	// TODO check response codes ???
+	// non-2xx
+	if res.StatusCode < 200 && res.StatusCode >= 300 {
+		log.Fatalf("received invalid status code from server %d (%s)", res.StatusCode, http.StatusText(res.StatusCode))
+	}
 
+	// 2xx
 	hdr := res.Header.Get("x-url-delete")
 	tmp := strings.Split(hdr, "/")
 	if len(tmp) > 1 {
